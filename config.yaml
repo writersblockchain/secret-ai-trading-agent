@@ -1,0 +1,32 @@
+# Blockchain
+blockchain:
+  secret:
+    network:
+      lcd: "https://secretnetwork-api.lavenderfive.com:443"
+      chain_id: "secret-4"
+      mnemonic: ""
+      wallet: "secret1vs8jpd5m9lnf35s9vuzx395aherexp7hsj3lfm"
+      sscrt_viewing_key: "e6bcf58eb88fc42f421b060f0f313e9f2b2779d4314f77fac1c813bbf239ae50"
+      susdc_viewing_key: "52c233dc18acd133a2743e2afe7e0006fe952dd0329fbdfa2ccaf32e3d026478"
+      sscrt_address: "secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek"
+      fees: "3500000"
+
+# Model Configuration
+llm:
+  model_name: "llama3.3:70b"
+  temperature: 0.1
+  max_tokens: 1000
+
+# Trading
+trading:
+  usdc: "1usdc"
+  scrt: "1000000uscrt"
+  handle: "SecretNetwork"
+  asset: "Secret Network" # Target cryptocurrency
+  id: "secret"
+  coin: "SCRT"
+  interval: 3600 # Analysis interval in seconds
+  confidence_threshold: 0.75 # Minimum confidence for trade signals
+  hashtags:
+    - SecretNetwork
+    - SCRT
