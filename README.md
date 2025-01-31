@@ -4,6 +4,8 @@
 
 3. pip install -r requirements.txt
 
+pip install python-dotenv
+
 4. python main.py
 
 https://github.com/scrtlabs/secret-ai-perun

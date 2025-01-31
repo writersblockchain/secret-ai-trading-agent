@@ -1,23 +1,24 @@
 import time
-from secret_sdk.core.wasm import MsgExecuteContract
+import os
 from secret_sdk.client.lcd import LCDClient
 from secret_sdk.key.mnemonic import MnemonicKey
 from secret_sdk.client.lcd.wallet import Wallet
-from secret_sdk.core.broadcast import SyncTxBroadcastResult
 from secret_sdk.core.tx import TxInfo
 from typing import Dict
 from shade import msgBuyScrt
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 # Hardcoded values from config.yaml
 LCD_URL = "https://lcd.mainnet.secretsaturn.net"
 CHAIN_ID = "secret-4"
-MNEMONIC = ""
+MNEMONIC = os.getenv("MNEMONIC")
 SSCRT_ADDRESS = "secret1k0jntykt7e4g3y88ltc60czgjuqdy4c9e8fzek"
 SUSDC_ADDRESS = "secret1vkq022x4q8t8kx9de3r84u669l65xnwf2lg3e6"
 SSCRT_VIEWING_KEY = "e6bcf58eb88fc42f421b060f0f313e9f2b2779d4314f77fac1c813bbf239ae50"
 SUSDC_VIEWING_KEY = "52c233dc18acd133a2743e2afe7e0006fe952dd0329fbdfa2ccaf32e3d026478"
-FEES = "3500000"
-GAS_LIMIT = 900_000
 
 # Initialize Secret Network client and wallet
 mk = MnemonicKey(MNEMONIC)
@@ -34,22 +35,25 @@ def _get_balance_sSCRT() -> Dict:  # {'balance': {'amount': 'x in uscrt'}}
 def _get_balance_sUSDC() -> Dict:  # {'balance': {'amount': 'x in usdc'}}
     return wallet.lcd.wasm.contract_query(SUSDC_ADDRESS, _msgQuerySnip20Balance(wallet.key.acc_address, SUSDC_VIEWING_KEY))
 
-def execute_buy_transaction(amount: str) -> Dict:
-    """Executes a buy transaction for SCRT using sUSDC."""
+def tx_execute():
+    """Executes a transaction to buy sSCRT."""
     try:
+        print("Executing transaction...")
         tx_execute = wallet.create_and_broadcast_tx(
-            [msgBuyScrt(wallet.key.acc_address, secret.encrypt_utils, amount)],
-            gas=FEES,
-        )
+        [msgBuyScrt(wallet.key.acc_address, secret.encrypt_utils, "400000")],
+        gas="3500000",
+    )
         txhash = tx_execute.txhash
-        print(f'Tx Code:{tx_execute.code} | Hash:{txhash}')
+        print(f'Transaction submitted: Tx Code: {tx_execute.code} | Hash: {txhash}')
         
-        time.sleep(5)  # Wait for transaction confirmation
-
-        txinfo: TxInfo = secret.tx.get_tx(txhash)
-        return txinfo.to_data()
+        # Wait for the transaction to be included in a block
+        time.sleep(8)
+        
+        # Fetch transaction info
+        txinfo: TxInfo = secret.tx.tx_info(txhash)
+        print(f'Transaction Info: {txinfo}')
     except Exception as e:
-        return {"error": str(e)}
+        print(f'Error executing transaction: {e}')
 
 if __name__ == "__main__":
     # Query and print balances
@@ -58,5 +62,9 @@ if __name__ == "__main__":
 
     balance_sUSDC = _get_balance_sUSDC()
     print("sUSDC Balance:", balance_sUSDC)
+
+    # Execute transaction
+    tx_execute()
+
 
 
