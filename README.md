@@ -34,10 +34,6 @@ python chat.py
 
 ## AI Memory & Context
 - The AI remembers past interactions in the same conversation.
-- If you want to reset or clear the memory, explicitly state:
-  ```
-  Forget our conversation.
-  ```
 - Stored responses can be retrieved for consistency in discussions.
 
 ## Querying Wallet Balances & Executing Trades
