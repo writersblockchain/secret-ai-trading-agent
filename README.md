@@ -20,7 +20,13 @@ conda activate secret-ai-trading-agent
 pip install -r requirements.txt
 ```
 
-4. Run the Secret AI chat
+4. Set API key 
+
+```
+export SECRET_AI_API_KEY=bWFzdGVyQHNjcnRsYWJzLmNvbTpTZWNyZXROZXR3b3JrTWFzdGVyS2V5X18yMDI1
+```
+
+5. Run the Secret AI chat
 
 ```
 python chat.py
