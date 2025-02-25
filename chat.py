@@ -1,7 +1,7 @@
 from main import TradingAgent
 
 agent = TradingAgent()
-user_id = "trader123"  # Choose a unique user ID
+user_id = "seanrad"  # Choose a unique user ID
 
 print("💬 $SCRT Trading AI - Start chatting! (Type 'exit' to quit)")
 

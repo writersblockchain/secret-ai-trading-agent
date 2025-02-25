@@ -17,7 +17,7 @@ conda activate secret-ai-trading-agent
 3. Install Secret AI dependencies 
 
 ```
-pip install -r requirements.txt
+pip install -r requirements.txt && pip install 'secret-sdk>=1.8.1' && pip install secret-ai-sdk
 ```
 
 4. Set API key 
