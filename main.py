@@ -146,7 +146,7 @@ class TradingAgent:
         self.urls = self.secret_client.get_urls(model=self.models[0])
         self.secret_ai_llm = ChatSecret(
             base_url=self.urls[0],
-            model=models[0],
+            model=self.models[0],
             temperature=1.0
         )
         setup_database()
